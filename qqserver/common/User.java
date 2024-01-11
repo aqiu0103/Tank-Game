@@ -1,4 +1,4 @@
-package com.qqserver;
+package com.qqserver.common;
 
 import java.io.Serializable;
 
@@ -12,6 +12,8 @@ public class User implements Serializable {
         this.userId = userId;
         this.passwd = passwd;
     }
+
+    public User(){};//无参构造器
 
     //访问和设置属性的方法
 

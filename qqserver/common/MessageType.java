@@ -1,4 +1,4 @@
-package com.qqserver;
+package com.qqserver.common;
 
 public interface MessageType {
     //在接口中定义了一些常量
