@@ -1,4 +1,4 @@
-package com.qq.common;
+package com.qqserver.common;
 
 import java.io.Serializable;
 

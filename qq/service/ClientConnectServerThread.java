@@ -1,6 +1,6 @@
 package com.qq.service;
 
-import com.qq.common.Message;
+import com.qqcommon.Message;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
