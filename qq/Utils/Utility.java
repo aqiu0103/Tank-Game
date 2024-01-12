@@ -1,7 +1,10 @@
 package com.qq.Utils;
 
 
+import java.text.SimpleDateFormat;
 import java.util.*;
+import java.util.logging.SimpleFormatter;
+
 /**
 
 	
@@ -167,5 +170,14 @@ public class Utility {
         }
 
         return line;
+    }
+
+    /*
+    * 获得当前时间
+    * */
+    public static String getTime(){
+        Date date=new Date();
+        SimpleDateFormat simpleDateFormat=new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+        return simpleDateFormat.format(date);
     }
 }

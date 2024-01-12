@@ -1,5 +1,6 @@
 package com.qq.service;
 
+import com.qq.Utils.Utility;
 import com.qqcommon.Message;
 import com.qqcommon.MessageType;
 import com.qqcommon.User;
@@ -20,8 +21,6 @@ public class UserClientService {
 
     //验证用户名和密码是否合法
     public Boolean checkUser(String userId, String pwd) throws IOException, ClassNotFoundException {
-
-
         //给准备要发往服务端的user数据填充数据
         u.setUserId(userId);
         u.setPasswd(pwd);
@@ -45,5 +44,53 @@ public class UserClientService {
             socket.close();
             return false;
         }
+    }
+
+    //请求拉取在线用户,客户端发送一个消息类型为请求拉取在线用户的消息给服务端
+    public  void onlineFriendList(String userID){
+        try {
+            Message message=new Message();
+            message.setMesType(MessageType.MESSAGE_GET_ONLINE_FRIEND);
+            message.setSender(userID);
+            ObjectOutputStream objectOutputStream=new ObjectOutputStream(ManageClientConnectServerThread.getThread(userID).getSocket().getOutputStream());
+            objectOutputStream.writeObject(message);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    //私聊功能
+    public void chat(String userID){
+        System.out.println("你想与谁聊天:");
+        String oppoUserID = Utility.readString(20);
+        System.out.println("输入内容:");
+        String content = Utility.readString(50);
+        Message message=new Message();
+        message.setSender(userID);
+        message.setContent(content);
+        message.setGetter(oppoUserID);
+        message.setSentTime(Utility.getTime());
+        message.setMesType(MessageType.MESSAGE_CHAT);
+        try {
+            ObjectOutputStream objectOutputStream=new ObjectOutputStream(ManageClientConnectServerThread.getThread(userID).getSocket().getOutputStream());
+            objectOutputStream.writeObject(message);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    //正常退出客户端
+    public void logout(String userID){
+        Message message=new Message();
+        message.setMesType(MessageType.MESSAGE_CLIENT_EXIT);
+        message.setSender(userID);
+        try {
+            ObjectOutputStream objectOutputStream = new ObjectOutputStream(ManageClientConnectServerThread.getThread(userID).getSocket().getOutputStream());
+            objectOutputStream.writeObject(message);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        //在管理线程中删除该线程
+        ManageClientConnectServerThread.removeThread(userID);
     }
 }

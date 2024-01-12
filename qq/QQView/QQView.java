@@ -14,6 +14,7 @@ public class QQView {
     public static void main(String[] args) throws IOException, ClassNotFoundException {
         new QQView().mainMenu();//创建对象并调用显示主菜单方法
         System.out.println("=========退出客户端系统成功=========");
+        System.exit(0);//退出系统
     }
 
     //显示主菜单方法
@@ -50,17 +51,20 @@ public class QQView {
                             switch (key){
                                 case "1":
                                     System.out.println("显示用户列表");
+                                    userClientService.onlineFriendList(userId);//发送请求给服务端
                                     break;
                                 case "2":
                                     System.out.println("群发消息");
                                     break;
                                 case "3":
                                     System.out.println("私聊消息");
+                                    userClientService.chat(userId);
                                     break;
                                 case "4":
                                     System.out.println("发送文件");
                                     break;
                                 case "9":
+                                    userClientService.logout(userId);
                                     loop=false;
                                     break;
                             }

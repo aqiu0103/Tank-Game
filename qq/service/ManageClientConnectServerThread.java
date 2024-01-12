@@ -15,4 +15,9 @@ public class ManageClientConnectServerThread {
     public static ClientConnectServerThread getThread(String userId){
         return hashMap.get(userId);
     }
+
+    //移除线程方法
+    public static void removeThread(String userID){
+        hashMap.remove(userID);
+    }
 }
